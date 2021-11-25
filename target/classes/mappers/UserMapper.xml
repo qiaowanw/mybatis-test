@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatis.mapper.UserMapper">
+  <!--  int save(User user);
+    int deleteById(Integer id);
+    int updateById(User user);
+    User findOne(Integer id);
+    List<User> findAll();-->
+    <resultMap id="userResultMap" type="com.example.mybatis.domain.User">
+        <id property="id" column="id"/>
+        <result property="email" column="email" />
+        <result property="password" column="password" />
+        <result property="birthday" column="birthday" />
+        <result property="sex" column="sex" />
+        <result property="loginCount" column="login_count" />
+        <result property="lastLoglinTime" column="last_loglin_time" />
+    </resultMap>
+    <insert id="save" parameterType="com.example.mybatis.domain.User">
+        insert into users(email, password, birthday, sex, login_count, last_login_time)
+        values (#{email},#{password},#{birthday},#{sex},#{loginCount},#{lastLoginTime})
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from users where (id=#{id})
+    </delete>
+
+    <update id="updateById" parameterType="com.example.mybatis.domain.User">
+        update users set email=#{email},password=#{password}, birthday=#{birthday}, sex=#{sex}, login_count=#{loginCount}, last_login_time=#{lastLoginTime} where id =#{id}
+    </update>
+
+    <select id="findOne" parameterType="java.lang.Integer" resultMap="userResultMap">
+        select * from users where id=#{id}
+    </select>
+
+    <select id="findAll" resultMap="userResultMap">
+        select * from users
+    </select>
+</mapper>
